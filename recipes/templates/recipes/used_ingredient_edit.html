@@ -1,0 +1,45 @@
+{% extends 'recipes/used_ingredient_add.html' %}
+
+{% block modal-id %} id="editIngredientModal{{ item.used_ingredient.pk }}" {% endblock modal-id %}
+{% block modal-title %}<i class="fas fa-pen"></i>&nbsp;&nbsp; Edit Ingredient{% endblock modal-title %}
+
+{% block action %} action="{% url 'recipe-edit-ingredient' %}" {% endblock action %}
+
+{% block btn-action %} <i class="fas fa-server"></i>&nbsp;&nbsp; Save Changes {% endblock btn-action %}
+
+<!-- ======= <inputs> ======= -->
+<!-- ID -->
+{% block value-id %}   
+    <input hidden type="text" class="form-control" name="pk" value="{{ item.used_ingredient.pk }}" readonly>
+{% endblock value-id %}
+<!-- ingredient pk -->
+{% block value-ingredient-pk %}{{ item.used_ingredient.ingredient.pk }}{% endblock value-ingredient-pk %}
+<!-- ingredient ingredient -->
+{% block value-ingredient-ingredient %}{{ item.used_ingredient.ingredient.ingredient }}{% if ingredient.alias %} ({{ ingredient.alias }}) {% endif %}{% endblock value-ingredient-ingredient %}
+<!-- ingredient brand -->
+{% block value-ingredient-brand %}{{ item.used_ingredient.ingredient.brand }}{% endblock value-ingredient-brand %}
+<!-- ingredient quantity -->
+{% block value-ingredient-quantity %}{{ item.used_ingredient.ingredient.quantity }}{% endblock value-ingredient-quantity %}
+<!-- ingredient unit -->
+{% block value-ingredient-unit %}{{ item.used_ingredient.ingredient.unit }}{% endblock value-ingredient-unit %}
+<!-- ingredient info -->
+{% block value-ingredient-info %}{{ item.used_ingredient.ingredient.quantity }} {{item.used_ingredient.ingredient.unit}}{% endblock value-ingredient-info %}
+<!-- used_ingredient serving -->
+{% block value-serving %} value="{{ item.used_ingredient.serving }}" {% endblock value-serving %}
+
+{% block nutrition-facts %}
+<div class="accordion mt-2" id="accordionPanels">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingNutrition">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseNutrition" aria-expanded="false" aria-controls="panelsStayOpen-collapseNutrition">
+                營養成分(每 {{ item.quantity_used }} {{ item.used_ingredient.ingredient.unit }} ) {{ item.calories }}大卡
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseNutrition" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingNutrition">
+            <div class="accordion-body">
+                {% include "recipes/used_ingredient_nutrition_facts.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock nutrition-facts %}

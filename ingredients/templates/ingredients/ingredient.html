@@ -1,0 +1,112 @@
+{% extends 'base_generic.html' %}
+
+{% block navbar-content %}
+<i class="text-warning fa-solid fa-utensils"></i>&nbsp;&nbsp; Ingredient List
+{% endblock navbar-content %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <p class="fs-3">Ingredient</p>
+        </div>
+        <div class="col text-end">
+            <a class="btn btn-outline-success mt-1 btn-sm" data-bs-toggle="modal" data-bs-target="#uploadFileModal">
+                <i class="fa-solid fa-file-excel"></i>&nbsp; Upload Ingredients
+            </a>
+            <a class="btn btn-outline-secondary mt-1 btn-sm" data-bs-toggle="modal" data-bs-target="#addIngredientModal">
+                <i class="fas fa-plus"></i>&nbsp; Add Ingredient
+            </a>
+            <a href="{% url 'search-ingredient' %}" class="btn btn-outline-primary mt-1 btn-sm">
+                <i class="fas fa-magnifying-glass"></i>&nbsp; Search ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+        </div>
+    </div>
+    {% include 'ingredients/ingredient_upload_file.html' %}
+    {% include 'ingredients/ingredient_add.html' %}
+
+    <div class="border border-1 border-bottom-0 rounded-2 mb-3 mt-2">
+        <div class="list-group list-group-flush">
+            {% for ingredient, nutrition_facts in obj %}
+                <button class="list-group-item list-group-item-action rounded-2" data-bs-toggle="modal" data-bs-target="#ingredientDetailModal{{ ingredient.pk }}" title="Ingredient detail">
+                    <div class="row mt-2 mb-1">
+                        <div class="col-11">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1" style="width: 70%;">{{ ingredient.ingredient }}{% if ingredient.alias %} ({{ ingredient.alias }}) {% endif %}</h5>
+                                <small class="text-muted">{{ ingredient.quantity }}{{ ingredient.unit }} / {{ nutrition_facts.calories }}卡路里</small>
+                            </div>
+                            <div class="d-flex w-100 justify-content-between">
+                                <p class="mb-1" style="width: 70%;">{{ ingredient.brand }} </p>
+                                <small class="text-muted">C {{ nutrition_facts.carbohydrate }} / P {{ nutrition_facts.protein }} / F {{ nutrition_facts.total_fat }}</small>
+                            </div>
+                            <div class="d-flex w-100 justify-content-between">
+                                <small class="mb-1" style="width: 70%;">{% if ingredient.description %}{{ ingredient.description }}{% endif %}</small>
+                                <small class="text-muted">{% if not ingredient.is_public %}<i class="fa-solid fa-lock"></i>{% endif %}</small>
+                            </div>
+                        </div>
+                        <div class="col-1 text-end">
+                            <a data-bs-toggle="modal" data-bs-target="#editIngredientModal{{ ingredient.pk }}" class="btn btn-outline-secondary rounded-circle border-0 ms-0 mt-1" title="Edit ingredient">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a data-bs-toggle="modal" data-bs-target="#deleteModal{{ ingredient.pk }}" class="btn btn-outline-secondary rounded-circle border-0 mt-1" title="Delete ingredient">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                
+                </button>
+                {% include 'ingredients/ingredient_edit.html' %}
+                {% include 'ingredients/ingredient_delete.html' %}
+                {% include 'ingredients/ingredient_detail.html' %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="">
+        <ul class="pagination justify-content-end">
+            {% if page_obj.number != 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.firstPage }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">&laquo;</span>
+                </li>
+            {% endif %}
+            {% if previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ previous }}" aria-label="Previous">
+                    <span aria-hidden="true">&hellip;</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% for page in pages %}
+                {% if page == page_obj.number %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">{{ page }}</span>
+                    </li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ next }}" aria-label="Next">
+                        <span aria-hidden="true">&hellip;</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if page_obj.number != page_obj.paginator.num_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">&raquo;</span>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock content %}

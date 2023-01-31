@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <!-- FontAwesome css -->
+    <script src="https://kit.fontawesome.com/37c35d8b29.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <!-- static css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>CookNote | {% block title %}  {% endblock title %}</title>
+</head>
+<body>
+    <div class="">
+        <div class="sticky-top">
+            <nav class="navbar navbar-expand-lg bg-body py-2 bg-light border-bottom">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="{% url 'home'%}">
+                        <h3>
+                            <img src="{% static 'images/salad.png' %}" alt="Logo" height="24" class="d-inline-block align-baseline">
+                            CookNote
+                        </h3>
+                    </a>
+                    <!-- <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="toggler-icon top-bar"></span>
+                        <span class="toggler-icon middle-bar"></span>
+                        <span class="toggler-icon bottom-bar"></span>
+                    </button> -->
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link" href="{% url 'recipe'%}">食譜</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'ingredient'%}">食材</a></li>
+                        </ul>
+                        <form class="d-flex" role="search" action="{% url 'search-recipe' %}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input class="form-control" type="search" name="search_name" placeholder="食譜或材料名稱" aria-label="Search" {% if search_text %}value={{ search_text }}{% endif %}>
+                                <button class="btn btn-outline-success" type="submit"><i class="fas fa-magnifying-glass"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <main>
+            <div class="container mt-4 mb-3">
+                {% block content %}{% endblock content %}
+            </div>
+        </main>
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top" id="footer">
+            <div class="container">
+                <div class="col-md-4 d-flex align-items-center">
+                    <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+                    </a>
+                    <span class="mb-3 mb-md-0 text-muted">&copy; {% now "Y" %} Company, Inc</span>
+                </div>
+            
+                <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                    <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+                    <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+                    <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+                </ul>
+            </div>
+        </footer>
+        
+        <!-- jquery -->
+        <script src="https://cdn.bootcss.com/jquery/3.6.3/jquery.min.js"></script>
+
+        <!-- Bootstrap js -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+
+        {% block scripts %}{% endblock scripts %}
+</body>
+</html>

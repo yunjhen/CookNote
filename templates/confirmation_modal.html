@@ -1,0 +1,17 @@
+<!-- Modal -->
+<div class="modal fade" {% block modal-id %}id="deleteModal"{% endblock modal-id %} tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content rounded-3 shadow">
+            <div class="modal-body p-4 text-center">
+                <h5 class="">{% block modal-title %}刪除 XXX ？{% endblock modal-title %}</h5>
+                <p class="">{% block modal-content %}刪除後將無法還原，確定仍要刪除嗎？{% endblock modal-content %}</p>
+            </div>
+            <form class="modal-footer flex-nowrap p-0" {% block action %} action="{% url 'recipe' %}" {% endblock action %} method="post">
+                {% csrf_token %}
+                <button type="button" class="btn btn-lg btn-outline-secondary fs-6 col-6 m-0 rounded-0 border-0 border-end" data-bs-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-lg {% block submit-btn-color %}btn-outline-danger{% endblock submit-btn-color %} fs-6 col-6 m-0 rounded-0 border-0"><strong>{% block submit-btn-value %}刪除{% endblock submit-btn-value %}</strong></button>
+                
+            </form>
+        </div>
+    </div>
+</div>

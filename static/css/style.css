@@ -1,0 +1,27 @@
+
+.not-visible {
+    display: none;
+}
+
+.tbl-container {
+    width: 100%;
+}
+
+.bdr {
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+img {
+    max-width: 100%;
+    object-fit: cover;
+}
+
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+    border: 0;
+}

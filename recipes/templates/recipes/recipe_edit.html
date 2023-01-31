@@ -1,0 +1,49 @@
+{% extends 'recipes/recipe_add.html' %}
+{% block title %} Edit Recipe {% endblock title %}
+
+{% block form-title %}<i class="fas fa-pen"></i>&nbsp;&nbsp; 修改食譜{% endblock form-title %}
+
+{% block action %} action="{% url 'edit-recipe' recipe.pk %}" {% endblock action %}
+
+<!-- All <input> -->
+{% block value-id %}
+    <input hidden type="text" class="form-control" name="pk" value="{{ recipe.pk }}" readonly>
+{% endblock value-id %}
+<!-- recipe delicacy -->
+{% block value-delicacy %} value="{{ recipe.delicacy }}" {% endblock value-delicacy %}
+<!-- recipe introduction -->
+{% block introduction %}{{ recipe.introduction }}{% endblock introduction %}
+<!-- recipe delicacy_photo -->
+{% block value-delicacy_photo %} value="{{ recipe.photo.photo }}" {% endblock value-delicacy_photo %}
+<!-- recipe delicacy_type -->
+{% block option-delicacy_type %}
+<option value="{{ recipe.delicacy_type }}" selected>
+    {% include 'recipes/recipe_select_delicacy_type.html' %}
+</option>
+<option value="a">開胃菜</option>
+{% endblock option-delicacy_type %}
+<!-- recipe category -->
+{% block option-category %}
+<option value="{{ recipe.category }}" selected>
+{% include 'recipes/recipe_select_category.html' %}
+</option>
+<option value="m">葷</option>
+{% endblock option-category %}
+<!-- recipe cooking_time -->
+{% block value-cooking_time %}
+    {% if recipe.cooking_time != 0 %} value="{{ recipe.cooking_time }}" {% endif %}
+{% endblock value-cooking_time %}
+<!-- recipe servings -->
+{% block value-servings %}
+    {% if recipe.servings %} value="{{ recipe.servings }}"{% endif %}
+{% endblock value-servings %}
+<!-- recipe reference -->
+{% block value-reference %}
+    {% if recipe.reference %} value="{{ recipe.reference }}"{% endif %}
+{% endblock value-reference %}
+<!-- recipe memo_text -->
+{% block memo_text %}{% if recipe.memo_text %}{{ recipe.memo_text }}{% endif %}{% endblock memo_text %}
+<!-- recipe storage_method -->
+{% block storage_method %}{% if recipe.storage_method %}{{ recipe.storage_method }}{% endif %}{% endblock storage_method %}
+<!-- END // All <input> -->
+

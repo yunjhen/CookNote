@@ -1,0 +1,25 @@
+{% extends 'recipes/step_add.html' %}
+
+{% block modal-id %} id="editStepModal{{ step.pk }}" {% endblock modal-id %}
+{% block modal-title %}<i class="fas fa-pen"></i>&nbsp;&nbsp; Edit Step{% endblock modal-title %}
+
+{% block action %} action="{% url 'step-edit' %}" {% endblock action %}
+
+{% block btn-action %} <i class="fas fa-server"></i>&nbsp;&nbsp; Save Changes {% endblock btn-action %}
+
+<!-- ======= <inputs> ======= -->
+<!-- ID -->
+{% block value-id %} 
+    <input hidden type="text" class="form-control" name="pk" value="{{ step.pk }}" readonly>
+    {% if step.step_photo %}
+        <img src="{{ step.step_photo.url }}" class="img-thumbnail" alt="step {{ step.step }}">
+    {% endif %}
+{% endblock value-id %}
+<!-- step step -->
+{% block value-step %}{% if step.description %} value="{{ step.step }}" {% endif %}{% endblock value-step %}
+<!-- step step_photo -->
+{% block value-step_photo %}{% if step.description %} value="{{ step.step_photo }}" {% endif %}{% endblock value-step_photo %}
+<!-- step description -->
+{% block description %}{% if step.description %}{{ step.description }}{% endif %}{% endblock description %}
+<!-- step notes -->
+{% block notes %}{% if step.description %}{{ step.notes }}{% endif %}{% endblock notes%}

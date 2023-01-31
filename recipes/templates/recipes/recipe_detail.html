@@ -1,0 +1,130 @@
+{% extends "base_generic.html" %}
+{% block title %} Recipe | {{ recipe.delicacy }}{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <h3>{{ recipe.delicacy }} ({{ recipe.servings }}人份)</h3>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-4 text-center">
+                    {% if recipe.photo %}
+                        <img class="align-text-top" src="{{ recipe.photo.photo.url }}" height="250" alt="{{ recipe.delicacy }}">
+                    {% endif %}
+                </div>
+                <div class="col-8">
+                    <ul class="list-group">
+                        <li class="list-group-item">關於這道料理<br>&nbsp;&nbsp;{{ recipe.introduction }}</li>
+                        <li class="list-group-item">料理時間&nbsp;&nbsp;
+                            {% if recipe.cooking_time != 0 %}
+                                {{ recipe.cooking_time }}
+                            {% else %}
+                                &nbsp;&nbsp;<small class="fw-light text-secondary">未填寫</small>
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">參考來源&nbsp;&nbsp;
+                            {% if recipe.reference %}
+                                {% if 'https' in recipe.reference %}
+                                    <a href="{{ recipe.reference }}" target="_blank">{{ recipe.reference }}</a>
+                                {% else %}
+                                    {{ recipe.reference }}
+                                {% endif %}
+                            {% else %}
+                                &nbsp;&nbsp;<small class="fw-light text-secondary">未填寫</small>
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">溫馨提醒&nbsp;&nbsp;
+                            {% if recipe.memo_text %}
+                                {{ recipe.memo_text }}
+                            {% else %}
+                                &nbsp;&nbsp;<small class="fw-light text-secondary">未填寫</small>
+                            {% endif %}
+                        <li class="list-group-item">保存方法&nbsp;&nbsp;
+                            {% if recipe.storage_method %}
+                                {{ recipe.storage_method }}
+                            {% else %}
+                                &nbsp;&nbsp;<small class="fw-light text-secondary">未填寫</small>
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-tags-fill"></i>&nbsp;&nbsp;
+                            {% include "recipes/recipe_select_delicacy_type.html" %}
+                            (
+                                {% include "recipes/recipe_select_category.html" %}
+                            )
+                        </li>    
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <h5 class="mt-2 mb-3">材料</h5>
+            <ul class="list-group">
+                {% for used_ingredient, quantityUsed, unit, calories in used_ingredients %}
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-8 text-start">
+                                {{ used_ingredient.ingredient.ingredient }}{% if used_ingredient.ingredient.alias %} ({{ used_ingredient.ingredient.alias }}) {% endif %}<small> - {{ used_ingredient.ingredient.brand }}</small>
+                            </div>
+                            <div class="col-4 text-end">
+                                {{ quantityUsed }} {{ unit }} ({{ calories }}kcal)
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li class="list-group-item">
+            <h5 class="mt-2 mb-3">做法</h5>
+            <div class="mt-2">
+                {% for step in steps %}
+                    <div class="card mb-1">
+                        <div class="row g-0">
+                            {% if step.photo.photo %}
+                                <div class="col-md-5">
+                                    <img src="{{ step.photo.photo.url }}" class="img-fluid rounded-start" alt="步驟{{ step.step }}">
+                                </div>
+                                <div class="col-md-7">
+                            {% else %}
+                                <div class="col-md-12">
+                            {% endif %}
+                            
+                                <div class="card-body">
+                                    <h5 class="card-title">步驟{{ step.step }}</h5>
+                                    <p class="card-text">{{ step.description }} </p>
+                                    {% if step.notes %}
+                                        <p class="card-text">
+                                            <small class="text-muted"><i class="bi bi-sticky"></i>&nbsp;&nbsp;{{ step.notes }}</small>
+                                        </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %} 
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="accordion mt-2" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingNutrition">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseNutrition" aria-expanded="false" aria-controls="panelsStayOpen-collapseNutrition">
+                            營養成分(每人份) {{ nutrition_facts.calories }}大卡
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseNutrition" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingNutrition">
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                <li class="list-group-item border-0">
+                                    <p id="scrollspyHeading1" class="fs-5">營養成分<small>(每人份)</small></p>
+                                    {% include 'ingredients/nutrition_facts.html' %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </li>
+    </ul>
+{% endblock %}

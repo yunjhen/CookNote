@@ -1,0 +1,10 @@
+{% extends 'confirmation_modal.html' %}
+
+{% block modal-id %}id="deleteRecipeModal{{ recipe.pk }}"{% endblock modal-id %}
+{% block action %} action="{% url 'delete-recipe' recipe.pk %}"{% endblock action %}
+
+{% block submit-btn-color %}btn-outline-danger{% endblock submit-btn-color %}
+{% block submit-btn-value %}刪除{% endblock submit-btn-value %}
+
+{% block modal-title %}刪除 {{ recipe.delicacy }} ?{% endblock modal-title %}
+{% block modal-content %}刪除後將無法還原，確定仍要刪除嗎？{% endblock modal-content %}

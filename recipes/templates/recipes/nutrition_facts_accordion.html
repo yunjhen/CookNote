@@ -1,0 +1,184 @@
+<!-- 營養標示(Nutrition Facts) -->
+<div class="accordion mt-2" id="accordionPanels">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingNutrition">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseNutrition" aria-expanded="false" aria-controls="panelsStayOpen-collapseNutrition">
+                營養成分(每人份 {{ingredient.quantity}} {{ingredient.unit}} ) {{ nutrition_facts.calories }}大卡
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseNutrition" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingNutrition">
+            <div class="accordion-body">
+                <ul class="list-group">
+                    <li class="list-group-item border-0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 熱量 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.calories }} &nbsp;kcal</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 蛋白質 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.protein }} &nbsp;g</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 總脂肪 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.total_fat }} &nbsp;g</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 飽和脂肪 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.saturated_fat }} &nbsp;g</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 反式脂肪 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.trans_fat }} &nbsp;g</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 多元不飽和脂肪 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.polyunsaturated_fat }} &nbsp;mg
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 單元不飽和脂肪 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.monounsaturated_fat }} &nbsp;mg
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 總碳水化合物 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.carbohydrate }} &nbsp;g</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 糖 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.sugar }} &nbsp;g</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 鈉 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.sodium }} &nbsp;mg</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 鉀 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.potassium }} &nbsp;mg</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 鈣 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.calcium }} &nbsp;mg</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 鐵 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.iron }} &nbsp;mg</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 鋅 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.zinc }} &nbsp;mg</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 膳食纖維 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.dietary_fiber }} g</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 膽固醇 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.cholesterol }} &nbsp;mg</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 維生素A </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.vitamin_a }} &nbsp;IU</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 維生素D </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.vitamin_d }} &nbsp;ug</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 維生素E </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.vitamin_e }} &nbsp;mg</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 維生素K </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.vitamin_k }} &nbsp;ug</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 維生素B1 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.vitamin_b1 }} &nbsp;mg</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 維生素B2 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.vitamin_b2 }} &nbsp;mg</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 菸鹼素/維生素B3 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.niacin }} &nbsp;mg</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 維生素B6 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.vitamin_b6 }} &nbsp;mg</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 維生素B12 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.vitamin_b12 }} &nbsp;ug</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 葉酸 </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.folate }} &nbsp;ug</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8 text-start"> 維生素C </div>
+                                    <div class="col-4 text-end"> {{ nutrition_facts.vitamin_c }} &nbsp;mg</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>  

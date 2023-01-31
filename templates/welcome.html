@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+
+
+{% block content %}
+    <form action="" method="get" id="user-form">
+        <label class="user-form" for="user-name">您的名字</label>
+        <input class="user-form" id="user-name" type="text" name="user-name">
+        <button class="user-form" type="button" id="submit-button">進入網站</button>
+    </form>
+{% endblock content %}
+
+
+{% block scripts %}
+    <script src="{% static 'js/hello.js' %}"></script>
+{% endblock scripts %}

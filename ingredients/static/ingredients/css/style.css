@@ -1,0 +1,7 @@
+.not-visible {
+    display: none;
+}
+
+input[type="submit"] {
+    font-family: FontAwesome;
+}

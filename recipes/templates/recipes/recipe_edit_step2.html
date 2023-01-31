@@ -1,0 +1,184 @@
+{% extends 'base_generic.html' %}
+{% block title %} Add Recipe {% endblock title %}
+
+{% block content %}
+<div class="">
+    <h3>{{ recipe.delicacy }} ({{ recipe.servings }}人份)</h3>
+    <div class="row">
+        {% if recipe.photo %}
+            <div class="col-md-4 text-center">
+                <img class="align-text-top" src="{{ recipe.photo.photo.url }}" height="280" alt="{{ recipe.delicacy }}">
+            </div>
+            <div class="col-md-8 ">
+        {% else %}
+            <div class="col">
+        {% endif %}
+
+            <ul class="list-group">
+                <li class="list-group-item">關於這道料理 {{ recipe.introduction }}</li>
+                <li class="list-group-item">料理類型 {% include 'recipes/recipe_select_delicacy_type.html' %}</li>
+                <li class="list-group-item">葷素 {% include 'recipes/recipe_select_category.html' %}</li>
+                <li class="list-group-item">料理時間 
+                    {% if recipe.cooking_time != 0 %}
+                        {{ recipe.cooking_time }}
+                    {% else %}
+                        &nbsp;&nbsp;<small class="fw-light text-secondary">未填寫</small>
+                    {% endif %}
+                </li>
+                <li class="list-group-item">參考來源 
+                    {% if recipe.reference %}
+                        {{ recipe.reference }}
+                    {% else %}
+                        &nbsp;&nbsp;<small class="fw-light text-secondary">未填寫</small>
+                    {% endif %}
+                </li>
+                <li class="list-group-item">溫馨提醒
+                    {% if recipe.memo_text %}
+                        {{ recipe.memo_text }}
+                    {% else %}
+                        &nbsp;&nbsp;<small class="fw-light text-secondary">未填寫</small>
+                    {% endif %}
+                </li>
+                <li class="list-group-item">保存方法
+                    {% if recipe.storage_method %}
+                        {{ recipe.storage_method }}
+                    {% else %}
+                        &nbsp;&nbsp;<small class="fw-light text-secondary">未填寫</small>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>   
+</div>
+
+<!-- 新增食材 -->
+<hr>
+<div class="row mt-3">
+    <div class="col-8 text-start">
+        <h4>材料</h4>
+    </div>
+    <div class="col-4 text-end">
+        <form action="{% url 'recipe-search-ingredient' %}" method="post">
+            {% csrf_token %}
+            <input class="btn btn-outline-success" type="submit" name="search_ingredient" value="加入食材" />
+        </form>
+    </div>
+</div>
+
+{% if used_ingredients %}
+<div class="list-group mt-2">
+    {% for item in used_ingredients %}
+        <button class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#editIngredientModal{{ item.used_ingredient.pk }}" title="Edit Ingredient">
+            <div class="row justify-content-md-center">
+                <div class="col-10">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ item.used_ingredient.ingredient.ingredient }}{% if item.used_ingredient.ingredient.alias %} ({{ item.used_ingredient.ingredient.alias }}) {% endif %}<small> - {{ item.used_ingredient.ingredient.brand }}</small></h5>
+                    </div>
+                    <small>{{ item.quantity_used }} {{ item.used_ingredient.ingredient.unit }}, {{ item.calories }}卡路里</small>
+                </div>
+                <div class="col-2 text-end">
+                    <a data-bs-toggle="modal" data-bs-target="#deleteIngredientModal{{ item.used_ingredient.pk }}" class="btn btn-outline-secondary rounded-circle border-0" title="Delete Step">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </button> 
+        
+        {% include 'recipes/used_ingredient_edit.html' %}
+        {% include 'recipes/used_ingredient_delete_modal.html' %}
+    {% endfor %}
+</div>
+<hr>
+{% endif %}
+<!-- END 新增食材 -->
+
+<!-- 新增步驟 -->
+<div class="row mt-3">
+    <div class="col-8 text-start">
+        <h4>做法</h4>
+    </div>
+    <div class="col-4 text-end">
+        <button class="btn btn-outline-success modal-button" data-bs-toggle="modal" data-bs-target="#addStepModal" title="Add Step"> 新增步驟</button>
+    </div>
+</div>
+
+{% if steps %}
+<div class="list-group mb-2 mt-2">
+    {% for step in steps %}
+        <button class="list-group-item list-group-item-action" data-bs-toggle="modal"
+            data-bs-target="#editStepModal{{ step.pk }}" title="Edit Step">
+            <div class="container">
+                <div class="row ">
+                    <div class="col-4 text-center">
+                        {% if step.photo %}
+                            <img src="{{ step.photo.photo.url }}" class="img-fluid rounded" alt="步驟{{ step.step }}">
+                        {% else %}
+                            <span class="text-muted">No photo</span>
+                        {% endif %}  
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">步驟 {{ step.step }}</h5>
+                        </div>
+                        <p class="mb-1">{{ step.description }}</p>
+                        {% if step.notes %}
+                        <small><i class="bi bi-sticky"></i>&nbsp;&nbsp;{{ step.notes }}</small>
+                        {% endif%}
+                    </div>
+                    <div class="col-2 text-end">
+                        <a data-bs-toggle="modal" data-bs-target="#deleteStepModal{{ step.pk }}" class="btn btn-outline-secondary rounded-circle border-0" title="Delete Step">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </button>
+        {% include 'recipes/step_edit.html' %}
+        {% include 'recipes/step_delete_modal.html' %}
+    {% endfor %}
+</div>
+<hr>
+{% endif %}
+{% include 'recipes/step_add.html' %}
+<!-- END 新增步驟 -->
+
+<!-- 料理的營養成分 -->
+{% if nutrition_facts %}
+<div class="accordion mb-3 mt-2" id="accordionPanels">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingNutrition">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseNutrition" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseNutrition">
+                營養成分<small>(每人份) - {{ nutrition_facts.calories }}kcal</small>
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseNutrition" class="accordion-collapse collapse"
+            aria-labelledby="panelsStayOpen-headingNutrition">
+            <div class="accordion-body">
+                {% include 'ingredients/nutrition_facts.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- button -->
+<div class="col-12 text-end mt-4">
+    {% if add_recipe %}
+        <a href="{% url 'add-recipe'%}" class="btn btn-outline-secondary">上一步</a>
+    {% else %}
+        <a href="{% url 'edit-recipe' recipe.pk %}" class="btn btn-outline-secondary">上一步</a>
+    {% endif %}
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#saveModal" {% if not valid %}disabled{% endif %}>
+        {% block btn-action %}
+            {% if add_recipe %}
+                新增
+            {% else %}
+                儲存
+            {% endif %}
+        {% endblock btn-action %}
+    </button> 
+</div>
+{% include 'recipes/recipe_save_modal.html' %}
+{% endblock content %}

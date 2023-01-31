@@ -1,0 +1,13 @@
+{% if recipe.delicacy_type == 'a' %}
+    開胃菜
+{% elif recipe.delicacy_type == 'm' %}
+    主餐
+{% elif recipe.delicacy_type == 'sf' %}
+    主食
+{% elif recipe.delicacy_type == 'sd' %}
+    副菜
+{% elif recipe.delicacy_type == 'd' %}
+    甜點
+{% elif recipe.delicacy_type == 'b' %}
+    飲品
+{% endif  %}

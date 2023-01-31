@@ -1,0 +1,50 @@
+<!-- Modal -->
+<div class="modal fade" {% block modal-id %} id="addStepModal" {% endblock modal-id %} tabindex="-1" aria-labelledby="addStepModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title fs-5" id="addStepModalLabel">{% block modal-title %}<i class="fas fa-plus"></i>&nbsp;&nbsp; Add Step{% endblock modal-title %}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form {% block action %} action="{% url 'step-add' %}" {% endblock action %} method="POST" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    <!-- block ID (denied here) -->
+                    {% block value-id %}{% endblock value-id %}
+
+                    <!-- Step -->
+                    <div class="form-floating mt-2 mb-2">
+                        <input type="number" class="form-control" placeholder="step" id="step" name="step" required {% block value-step %}{% endblock value-step %}>
+                        <label for="step">步驟</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control" placeholder="Description" id="description" name="description" style="height: 100px" required>{% block description %}{% endblock description %}</textarea>
+                        <label for="description">做法</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control" placeholder="notes" id="notes" name="notes" style="height: 100px">{% block notes %}{% endblock notes %}</textarea>
+                        <label for="notes">溫馨提醒</label>
+                    </div>
+                    <div class="mb-2">
+                        <label class="btn btn-light form-control">
+                            upload step photo here
+                            <input type="file" accept="image/*" class=" form-control" name="step_photo" id="id_step_photo" maxlength="40" placeholder="Step Photo" {% block value-step_photo %}{% endblock value-step_photo %}>
+                        </label>
+                    </div>
+                    
+                    <!-- Button -->
+                    <div class="mt-4 text-end" style="width: 100%;">
+                        <button type="reset" class="btn btn-outline-dark ms-2" style="width: 50px;" title="Reset">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button type="submit" class="btn btn-outline-success">
+                            {% block btn-action %}
+                            <i class="fas fa-plus"></i>&nbsp;&nbsp; Add Step
+                            {% endblock btn-action %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

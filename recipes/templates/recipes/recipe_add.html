@@ -1,0 +1,100 @@
+{% extends "base_generic.html" %}
+{% block title %} Add Recipe {% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 text-center">
+            <h4 class="fs-5">{% block form-title %}<i class="fas fa-plus"></i>&nbsp;&nbsp; 新增食譜{% endblock form-title %}</h4>
+        </div>
+        <div class="col-4 text-end">
+        </div>
+    </div>
+    <form {% block action %} action="{% url 'add-recipe' %}" {% endblock action %} method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <!-- block ID (denied here) -->
+            {% block value-id %}{% endblock value-id %}
+
+            <!-- Recipe -->
+            <div class="form-floating mb-2">
+                <input type="text" class="form-control" id="delicacy" name="delicacy" maxlength="50" placeholder="例如: 茶凍" required {% block value-delicacy %}value="{{ recipe.delicacy }}"{% endblock value-delicacy %}>
+                <label for="delicacy"> 料理名稱 </label>
+            </div>
+            <div class="form-floating mb-2">
+                <textarea class="form-control" id="introduction" name="introduction" maxlength="1000" placeholder="例如: 微甜、口感扎實的茶凍" style="height: 100px" required>{% block introduction %}{{ recipe.introduction }}{% endblock introduction %}</textarea>
+                <label for="introduction"> 料理簡介 </label>
+            </div>
+            <label class="btn btn-light form-control mb-2 text-start" id="delicacy_photo">
+                料理圖片
+                {% if recipe.photo %}
+                    <img src="{{ recipe.photo.photo.url }}"  height="200" alt="{{ recipe.delicacy }}">
+                {% endif %}
+                <input type="file" class=" form-control" name="delicacy_photo" placeholder="料理圖片" {% block value-delicacy_photo %}value="{{ recipe.photo.photo }}"{% endblock value-delicacy_photo %}>
+            </label>        
+            <div class="form-floating mb-2">
+                <select class="form-select" id="delicacy_type" name="delicacy_type" aria-label="Floating label select example" required>
+                    {% block option-delicacy_type %}
+                        {% if recipe.delicacy_type %}
+                            {% include "recipes/recipe_select_delicacy_type.html" %}
+                        {% else %}
+                            <option value="a" selected>開胃菜</option>
+                        {% endif %}
+                    {% endblock option-delicacy_type %}
+                    <option value="m">主餐</option>
+                    <option value="sf">主食</option>
+                    <option value="sd">副菜</option>
+                    <option value="d">甜點</option>
+                    <option value="b">飲品</option>
+                </select>
+                <label for="delicacy_type">料理類型</label>
+            </div>
+            <div class="form-floating mb-2">
+                <select class="form-select" id="category" name="category" aria-label="Floating label select example" required>
+                    {% block option-category %}
+                        {% if recipe.category %}
+                            {% include "recipes/recipe_select_category.html" %}
+                        {% else %}
+                        <option value="m" selected>葷</option>
+                        {% endif %}
+                    {% endblock option-category %}
+                    <option value="v">純素</option>
+                    <option value="o">蛋奶素</option>
+                    <option value="f">五辛素</option>
+                </select>
+                <label for="category">葷素</label>
+            </div>
+            <div class="form-floating mb-2">
+                <input type="number" min="1" class="form-control" id="cooking_time" name="cooking_time" placeholder="選填" {% block value-cooking_time %}{% if recipe.cooking_time != 0 %}value="{{ recipe.cooking_time }}"{% endif %}{% endblock value-cooking_time %}>
+                <label for="cooking_time"> 料理時間(分鐘) </label>
+            </div>
+            <div class="form-floating mb-2">
+                <input type="number" min="1" max="100" class="form-control" id="servings" name="servings" placeholder="必填" required {% block value-servings %}value="{{ recipe.servings }}"{% endblock value-servings %}>
+                <label for="servings"> 幾人份 </label>
+            </div>
+            <div class="form-floating mb-2">
+                <input type="text" class="form-control" id="reference" name="reference" maxlength="1000" placeholder="選填" {% block value-reference %}value="{{ recipe.reference }}"{% endblock value-reference %}>
+                <label for="reference"> 參考來源 </label>
+            </div>
+            <div class="form-floating mb-2">
+                <textarea class="form-control" id="memo_text" name="memo_text" maxlength="1000" style="height: 100px" placeholder="選填">{% block memo_text %}{{ recipe.memo_text }}{% endblock memo_text %}</textarea>
+                <label for="memo_text"> 溫馨提醒 </label>
+            </div>
+            <div class="form-floating mb-2">
+                <textarea class="form-control" id="storage_method" name="storage_method" maxlength="1000" style="height: 100px" placeholder="選填">{% block storage_method %}{{ recipe.storage_method }}{% endblock storage_method %}</textarea>
+                <label for="storage_method"> 保存方法 </label>
+            </div>
+        </div>
+
+        <!-- button -->
+        <div class="col-12 text-end">
+            <a href="{% url 'recipe'%}" class="btn btn-outline-secondary"><i class="fas fa-chevron-left"></i></a>
+            <button type="reset" class="btn btn-outline-secondary" title="Reset">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+            <button type="submit" class="btn btn-outline-success" title="Next Step">
+                下一步
+            </button>
+        </div>
+    </form>
+{% endblock content %}

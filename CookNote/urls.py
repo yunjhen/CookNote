@@ -19,10 +19,11 @@ from django.urls.conf import include
 from .views import welcome_view
 from django.conf import settings
 from django.conf.urls.static import static
-
+from recipes.views import RecipeListView
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', welcome_view, name='home'),
+    path('', RecipeListView.as_view(), name='home'),
+    # path('', welcome_view, name='home'),
     path('recipe/', include('recipes.urls')),
     path('ingredient/', include('ingredients.urls')),
 ]

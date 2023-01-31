@@ -1,0 +1,91 @@
+{% extends 'ingredients/ingredient_add.html' %}
+
+{% block modal-id %} id="editIngredientModal{{ ingredient.pk }}" {% endblock modal-id %}
+{% block modal-title %}<i class="fas fa-pen"></i>&nbsp;&nbsp; Edit Ingredient{% endblock modal-title %}
+
+{% block action %} action="{% url 'edit-ingredient' %}" {% endblock action %}
+
+{% block btn-action %} <i class="fas fa-server"></i>&nbsp;&nbsp; Save Changes {% endblock btn-action %}
+
+<!-- ======= <inputs> ======= -->
+<!-- ID -->
+{% block value-id %}
+<div class="input-group">
+    <input hidden type="text" class="form-control" name="id" value="{{ ingredient.pk }}" readonly>
+</div>
+{% endblock value-id %}
+<!-- ingredient is_public -->
+{% block checked-is-public %}
+    {% if ingredient.is_public %}
+        checked
+    {% endif %}
+{% endblock checked-is-public %}
+<!-- ingredient name -->
+{% block value-ingredient %} value="{{ ingredient.ingredient }}" {% endblock value-ingredient %}
+<!-- ingredient name -->
+{% block value-alias %} value="{% if ingredient.alias %}{{ ingredient.alias }}{% endif %}" {% endblock value-alias %}
+<!-- ingredient brand -->
+{% block value-brand %} value="{{ ingredient.brand }}" {% endblock value-brand %}
+<!-- ingredient quantity -->
+{% block value-quantity %} value="{{ ingredient.quantity }}" {% endblock value-quantity %}
+<!-- ingredient unit -->
+{% block option %}
+<option value="{{ ingredient.unit }}" selected>{{ ingredient.unit }}</option>
+<option value="g">g</option>
+{% endblock option %}
+<!-- ingredient description -->
+{% block description %}{% if ingredient.description %}{{ ingredient.description }}{% endif %}{% endblock description %}
+<!-- nutrition facts calories -->
+{% block value-calories %} value="{{ nutrition_facts.calories }}" {% endblock value-calories %}
+<!-- nutrition facts protein -->
+{% block value-protein %} value="{{ nutrition_facts.protein }}" {% endblock value-protein %}
+<!-- nutrition facts total_fat -->
+{% block value-total_fat %} value="{{ nutrition_facts.total_fat }}" {% endblock value-total_fat %}
+<!-- nutrition facts saturated_fat -->
+{% block value-saturated_fat %} value="{{ nutrition_facts.saturated_fat }}" {% endblock value-saturated_fat %}
+<!-- nutrition facts trans_fat -->
+{% block value-trans_fat %} value="{{ nutrition_facts.trans_fat }}" {% endblock value-trans_fat %}
+<!-- nutrition facts polyunsaturated_fat -->
+{% block value-polyunsaturated_fat %} value="{{ nutrition_facts.polyunsaturated_fat }}" {% endblock value-polyunsaturated_fat %}
+<!-- nutrition facts monounsaturated_fat -->
+{% block value-monounsaturated_fat %} value="{{ nutrition_facts.monounsaturated_fat }}" {% endblock value-monounsaturated_fat %}
+<!-- nutrition facts carbohydrate -->
+{% block value-carbohydrate %} value="{{ nutrition_facts.carbohydrate }}" {% endblock value-carbohydrate %}
+<!-- nutrition facts sugar -->
+{% block value-sugar %} value="{{ nutrition_facts.sugar }}" {% endblock value-sugar %}
+<!-- nutrition facts sodium -->
+{% block value-sodium %} value="{{ nutrition_facts.sodium }}" {% endblock value-sodium %}
+<!-- nutrition facts potassium -->
+{% block value-potassium %} value="{{ nutrition_facts.potassium }}" {% endblock value-potassium %}
+<!-- nutrition facts calcium -->
+{% block value-calcium %} value="{{ nutrition_facts.calcium }}" {% endblock value-calcium %}
+<!-- nutrition facts iron -->
+{% block value-iron %} value="{{ nutrition_facts.iron }}" {% endblock value-iron %}
+<!-- nutrition facts zinc -->
+{% block value-zinc %} value="{{ nutrition_facts.zinc }}" {% endblock value-zinc %}
+<!-- nutrition facts dietary_fiber -->
+{% block value-dietary_fiber %} value="{{ nutrition_facts.dietary_fiber }}" {% endblock value-dietary_fiber %}
+<!-- nutrition facts cholesterol -->
+{% block value-cholesterol %} value="{{ nutrition_facts.cholesterol }}" {% endblock value-cholesterol %}
+<!-- nutrition facts vitamin_a -->
+{% block value-vitamin_a %} value="{{ nutrition_facts.vitamin_a }}" {% endblock value-vitamin_a %}
+<!-- nutrition facts vitamin_d -->
+{% block value-vitamin_d %} value="{{ nutrition_facts.vitamin_d }}" {% endblock value-vitamin_d %}
+<!-- nutrition facts vitamin_e -->
+{% block value-vitamin_e %} value="{{ nutrition_facts.vitamin_e }}" {% endblock value-vitamin_e %}
+<!-- nutrition facts vitamin_k -->
+{% block value-vitamin_k %} value="{{ nutrition_facts.vitamin_k }}" {% endblock value-vitamin_k %}
+<!-- nutrition facts vitamin_b1 -->
+{% block value-vitamin_b1 %} value="{{ nutrition_facts.vitamin_b1 }}" {% endblock value-vitamin_b1 %}
+<!-- nutrition facts vitamin_b2 -->
+{% block value-vitamin_b2 %} value="{{ nutrition_facts.vitamin_b2 }}" {% endblock value-vitamin_b2 %}
+<!-- nutrition facts niacin -->
+{% block value-niacin %} value="{{ nutrition_facts.niacin }}" {% endblock value-niacin %}
+<!-- nutrition facts vitamin_b6 -->
+{% block value-vitamin_b6 %} value="{{ nutrition_facts.vitamin_b6 }}" {% endblock value-vitamin_b6 %}
+<!-- nutrition facts vitamin_b12 -->
+{% block value-vitamin_b12 %} value="{{ nutrition_facts.vitamin_b12 }}" {% endblock value-vitamin_b12 %}
+<!-- nutrition facts folate -->
+{% block value-folate %} value="{{ nutrition_facts.folate }}" {% endblock value-folate %}
+<!-- nutrition facts vitamin_c -->
+{% block value-vitamin_c %} value="{{ nutrition_facts.vitamin_c }}" {% endblock value-vitamin_c %}

@@ -1,0 +1,61 @@
+<!-- Modal -->
+<div class="modal fade" {% block modal-id %} id="addIngredientToRecipeModal{{ ingredient.pk }}" {% endblock modal-id %} tabindex="-1" aria-labelledby="addIngredientToRecipeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title fs-5" id="addIngredientToRecipeModalLabel">{% block modal-title %}<i class="fas fa-plus"></i>&nbsp;&nbsp; Add Ingredient{% endblock modal-title %}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form {% block action %} action="{% url 'recipe-add-ingredient' ingredient.pk %}" {% endblock action %} method="POST">
+                {% csrf_token %}
+                    <!-- block ID (denied here) -->
+                    {% block value-id %}   
+                    {% endblock value-id %}
+
+                    <!-- Ingredient -->
+                    <input hidden type="text" class="form-control" name="ingredient_id" value="{% block value-ingredient-pk %}{{ ingredient.pk }}{% endblock value-ingredient-pk %}" readonly>
+
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body form-control border-end-0"> 食材名稱 </span>
+                        <input type="text" class="form-control border-start-0 text-end" name="ingredient" maxlength="40" value="{% block value-ingredient-ingredient %}{{ ingredient.ingredient }}{% if ingredient.alias %} ({{ ingredient.alias }}) {% endif %}{% endblock value-ingredient-ingredient %}" readonly>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body form-control border-end-0"> 食材品牌/資料來源 </span>
+                        <input type="text" class="form-control border-start-0 text-end" name="brand" maxlength="40" value="{% block value-ingredient-brand %}{{ ingredient.brand }}{% endblock value-ingredient-brand %}" readonly>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body form-control border-end-0"> 每一份量 </span>
+                        <input type="text" class="form-control border-start-0 text-end" value="{% block value-ingredient-info %}{{ ingredient.quantity }} {{ ingredient.unit }}{% endblock value-ingredient-info %}" readonly >
+                        <input hidden type="number" class="form-control border-start-0 text-end" id="quantity" name="quantity" value="{% block value-ingredient-quantity %}{{ ingredient.quantity }}{% endblock value-ingredient-quantity %}" readonly >
+                        <input hidden type="text" class="form-control border-start-0 text-end" id="unit" name="unit" value="{% block value-ingredient-unit %}{{ ingredient.unit }}{% endblock value-ingredient-unit %}" readonly >
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body form-control border-end-0"> 份數 </span>
+                        <input type="number" step="0.001" min="0" max="1000" class="form-control border-start-0 text-end" id="serving" name="serving" maxlength="60" placeholder="例如: 1.5" required {% block value-serving %}{% endblock value-serving %}>
+                    </div>
+                   
+                    <!-- Button -->
+                    <div class="mt-4 text-end" style="width: 100%;">
+                        <button type="submit" class="btn btn-secondary">
+                            {% block btn-action %}
+                            <i class="fas fa-plus"></i>&nbsp;&nbsp; Add Ingredient
+                            {% endblock btn-action %}
+                        </button>
+                        <a href="{% url 'edit-recipe-step2' %}" class="btn btn-outline-dark ms-2" style="width: 50px;" title="Back">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                        <button type="reset" class="btn btn-outline-dark ms-2" style="width: 50px;" title="Reset">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- 營養標示(Nutrition Facts) -->
+                {% block nutrition-facts %}
+                    {% include 'recipes/nutrition_facts_accordion.html' %}
+                {% endblock nutrition-facts %}
+            </div>
+        </div>
+    </div>
+</div>

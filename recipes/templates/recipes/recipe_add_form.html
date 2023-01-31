@@ -1,0 +1,40 @@
+{% extends "base_generic.html" %}
+{% block title %} Add Recipe {% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 text-center">
+            <h4 class="fs-5">{% block form-title %}<i class="fas fa-plus"></i>&nbsp;&nbsp; 新增食譜{% endblock form-title %}</h4>
+        </div>
+        <div class="col-4 text-end">
+        </div>
+    </div>
+    <form {% block action %} action="{% url 'add-recipe' %}" {% endblock action %} method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h5 class="mt-4 mb-4">{{ naming }}食譜</h5>
+        <div class="form-group">
+        {% for item in recipe %}
+            <div class="row">
+            <div class="col-12 ">
+                <div class="mb-2 form-floating">
+                {{ item }}
+                <label for="{{ item.id_for_label }}">{{ item.label }}</label>
+                </div>
+            </div>
+            </div>
+        {% endfor %}
+        </div>
+        <!-- button -->
+        <div class="col-12 text-end">
+            <a href="{% url 'recipe'%}" class="btn btn-outline-dark"><i class="fas fa-chevron-left"></i></a>
+            <button type="reset" class="btn btn-outline-dark" title="Reset">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+            <button type="submit" class="btn btn-outline-success" title="Next Step">
+                下一步
+            </button>
+        </div>
+    </form>
+
+{% endblock content %}

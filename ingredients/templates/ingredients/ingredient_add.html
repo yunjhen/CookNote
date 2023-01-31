@@ -1,0 +1,180 @@
+<!-- Modal -->
+<div class="modal fade" {% block modal-id %} id="addIngredientModal" {% endblock modal-id %} tabindex="-1" aria-labelledby="addIngredientModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title fs-5" id="addIngredientModalLabel">{% block modal-title %}<i class="fas fa-plus"></i>&nbsp;&nbsp; Add Ingredient{% endblock modal-title %}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form {% block action %} action="{% url 'add-ingredient' %}" {% endblock action %} method="POST" autocomplete="off" >
+                    {% csrf_token %}
+                    <!-- block ID (denied here) -->
+                    {% block value-id %}{% endblock value-id %}
+
+                    <!-- Ingredient -->
+                    <div class="form-check form-switch form-check-reverse mb-2">
+                        <input class="form-check-input" type="checkbox" data-toggle="switchbutton" data-onstyle="success" role="switch" id="is_public" name="is_public" {% block checked-is-public %}{% endblock checked-is-public %}>
+                        <label class="form-check-label" for="is_public">是否設為公開</label>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 食材名稱 </span>
+                        <input type="text" class="form-control border-start-0 text-end" id="ingredient" name="ingredient" maxlength="50" placeholder="例如: 鮮奶油" required {% block value-ingredient %}{% endblock value-ingredient %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 別名 </span>
+                        <input type="text" class="form-control border-start-0 text-end" id="alias" name="alias" maxlength="50" placeholder="例如: 動物性奶油" {% block value-alias %}{% endblock value-alias %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 食材品牌/資料來源 </span>
+                        <input type="text" class="form-control border-start-0 text-end" name="brand" maxlength="50" placeholder="例如: Elle&Vire 或 FDA" required {% block value-brand %}{% endblock value-brand %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 每一份量 </span>
+                        <input input type="number" step="0.1" min="0" max="10000" class="form-control border-start-0 text-end" id="quantity" name="quantity" maxlength="60" placeholder="例如: 100" required {% block value-quantity %}{% endblock value-quantity %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 單位</span>
+                        <select class="form-select border-start-0 text-end" name="unit" required>
+                            {% block option %}
+                            <option value="g" selected>g</option>
+                            {% endblock option %}
+                            <option value="ml">ml</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0" for="description"> 關於食材的描述</span>
+                        <textarea class="form-control border-start-0 text-end" placeholder="Description" id="description" name="description" style="height: 100px">{% block description %}{% endblock description %}</textarea>
+                    </div>
+                    
+                    <hr>
+                    <!-- Nutrition_Facts -->
+                    <p class="fs-6 mt-3 mb-2">營養成分</p>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 熱量(kcal) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="calories" placeholder="必填" required {% block value-calories %}{% endblock value-calories %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 蛋白質(g) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="protein" placeholder="必填" required {% block value-protein %}{% endblock value-protein %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 總脂肪(g) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="total_fat" placeholder="必填" required {% block value-total_fat %}{% endblock value-total_fat %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 飽和脂肪(g) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="saturated_fat" placeholder="必填" required {% block value-saturated_fat %}{% endblock value-saturated_fat %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 反式脂肪(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="trans_fat" placeholder="必填" required {% block value-trans_fat %}{% endblock value-trans_fat %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 多元不飽和脂肪(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="polyunsaturated_fat" placeholder="選填" {% block value-polyunsaturated_fat %}{% endblock value-polyunsaturated_fat %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 單元不飽和脂肪(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="monounsaturated_fat" placeholder="選填" {% block value-monounsaturated_fat %}{% endblock value-monounsaturated_fat %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 總碳水化合物(g) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="carbohydrate" placeholder="必填" required {% block value-carbohydrate %}{% endblock value-carbohydrate %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 糖(g) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="sugar" placeholder="必填" required {% block value-sugar %}{% endblock value-sugar %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 鈉(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="sodium" placeholder="必填" required {% block value-sodium %}{% endblock value-sodium %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 鉀(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="potassium" placeholder="選填" {% block value-potassium %}{% endblock value-potassium %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 鈣(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="calcium" placeholder="選填" {% block value-calcium %}{% endblock value-calcium %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 鐵(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="iron" placeholder="選填" {% block value-iron %}{% endblock value-iron %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 鋅(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="zinc" placeholder="選填" {% block value-zinc %}{% endblock value-zinc %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 膳食纖維(g) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="dietary_fiber" placeholder="選填" {% block value-dietary_fiber %}{% endblock value-dietary_fiber %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 膽固醇(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="cholesterol" placeholder="選填" {% block value-cholesterol %}{% endblock value-cholesterol %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 維生素A(IU) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="vitamin_a" placeholder="選填" {% block value-vitamin_a %}{% endblock value-vitamin_a %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 維生素D(ug) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="vitamin_d" placeholder="選填" {% block value-vitamin_d %}{% endblock value-vitamin_d %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 維生素E(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="vitamin_e" placeholder="選填" {% block value-vitamin_e %}{% endblock value-vitamin_e %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 維生素K(ug) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="vitamin_k" placeholder="選填" {% block value-vitamin_k %}{% endblock value-vitamin_k %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 維生素B1(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="vitamin_b1" placeholder="選填" {% block value-vitamin_b1 %}{% endblock value-vitamin_b1 %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 維生素B2(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="vitamin_b2" placeholder="選填" {% block value-vitamin_b2 %}{% endblock value-vitamin_b2 %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 菸鹼素/維生素B3(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="niacin" placeholder="選填" {% block value-niacin %}{% endblock value-niacin %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 維生素B6(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="vitamin_b6" placeholder="選填" {% block value-vitamin_b6 %}{% endblock value-vitamin_b6 %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 維生素B12(ug) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="vitamin_b12" placeholder="選填" {% block value-vitamin_b12 %}{% endblock value-vitamin_b12 %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 葉酸(ug) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="folate" placeholder="選填" {% block value-folate %}{% endblock value-folate %}>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text bg-body border-end-0"> 維生素C(mg) </span>
+                        <input type="number" step="0.01" min="0" max="1000000" class="form-control border-start-0 text-end" name="vitamin_c" placeholder="選填" {% block value-vitamin_c %}{% endblock value-vitamin_c %}>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="mt-4 text-end" style="width: 100%;">
+                        <button type="button" class="btn btn-outline-secondary ms-1" style="width: 50px;" title="Back" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button type="reset" class="btn btn-outline-secondary ms-1" style="width: 50px;" title="Reset">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button type="submit" class="btn btn-outline-primary ms-1">
+                            {% block btn-action %}
+                            <i class="fas fa-plus"></i>&nbsp;&nbsp; Add Ingredient
+                            {% endblock btn-action %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

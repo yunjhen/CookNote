@@ -1,0 +1,39 @@
+<!-- Modal -->
+{% load static %}
+
+<div class="modal fade" {% block modal-id %} id="uploadFileModal" {% endblock modal-id %} tabindex="-1" aria-labelledby="uploadFileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title fs-5" id="uploadFileModalLabel">{% block modal-title %}<i class="fa-solid fa-file-excel"></i>&nbsp;&nbsp;Upload Ingredients{% endblock modal-title %}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <a href="{% static 'ingredients/files/ingredient_template.xlsx' %}" download class="btn btn-sm btn-outline-success"><i class="bi bi-cloud-download"></i> 下載範本</a>
+                <a href="{% static 'ingredients/files/FDA_template(以100g為單位).xlsx' %}" download class="btn btn-sm btn-outline-success"><i class="bi bi-cloud-download"></i> 下載範本(FDA)</a>   
+                <form {% block action %} action="{% url 'upload-ingredients' %}" {% endblock action %} method="POST" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    <label class="btn btn-light form-control mt-2">
+                        upload excel file here
+                        <input type="file" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class=" form-control" name="file" id="file" maxlength="40" placeholder="Ingredient File"/>
+                    </label>
+
+                    <!-- Button -->
+                    <div class="mt-4 text-end" style="width: 100%;">
+                        <button type="button" class="btn btn-outline-secondary ms-1" style="width: 50px;" title="Back" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button type="reset" class="btn btn-outline-secondary ms-1" style="width: 50px;" title="Reset">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button type="submit" class="btn btn-outline-primary ms-1">
+                            {% block btn-action %}
+                            <i class="fa-solid fa-arrow-up-from-bracket"></i></i>&nbsp;&nbsp; 送出
+                            {% endblock btn-action %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

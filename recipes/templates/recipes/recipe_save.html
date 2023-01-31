@@ -1,0 +1,35 @@
+<!-- Confirm Save Changes Modal -->
+<div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="saveModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="saveModalLabel">Save Recipe</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                是否要儲存？
+                <form {% block form-action %} action="{% url 'edit-recipe-step2' %}" {% endblock form-action %} method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <!-- block ID (denied here) -->
+                        {% block value-id %}{% endblock value-id %}
+                
+                        <!-- Recipe -->
+                        <input hidden id="delicacy" name="delicacy" value="{{ recipe.delicacy }}">
+                        <input hidden id="introduction" name="introduction" value="{{ recipe.introduction }}">
+                        <input hidden id="delicacy_photo" name="delicacy_photo" value="{{ recipe.delicacy_photo }}">
+                        <input hidden id="delicacy" name="delicacy_type" value="{{ recipe.delicacy_type }}">
+                        <input hidden id="delicacy" name="category" value="{{ recipe.category }}">
+                        <input hidden id="delicacy" name="cooking_time" value="{{ recipe.cooking_time }}">
+                        <input hidden id="delicacy" name="servings" value="{{ recipe.servings }}">
+                        <input hidden id="delicacy" name="reference" value="{{ recipe.reference }}">
+                        <input hidden id="delicacy" name="memo_text" value="{{ recipe.memo_text }}">
+                        <input hidden id="delicacy" name="storage_method" value="{{ recipe.storage_method }}">
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

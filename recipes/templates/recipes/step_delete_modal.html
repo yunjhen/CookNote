@@ -1,0 +1,23 @@
+{% extends 'confirmation_modal.html' %}
+
+{% block modal-id %}id="deleteStepModal{{ step.pk }}"{% endblock modal-id %}
+{% block action %} action="{% url 'step-delete' step.pk %}"{% endblock action %}
+
+{% block submit-btn-color %}btn-outline-danger{% endblock submit-btn-color %}
+{% block submit-btn-value %}刪除{% endblock submit-btn-value %}
+
+{% block modal-title %}刪除所選的步驟?{% endblock modal-title %}
+{% block modal-content %}
+
+{% if step.photo %}
+<img src="{{ step.photo.photo.url }}" height="150" class="img-fluid rounded" alt="步驟{{ step.step }}">
+<br>
+{% endif %}
+
+步驟{{ step.step }} - {{step.description}} 
+
+{% if step.notes %}
+<br>
+<small class="text-muted">note: {{ step.notes }}</small><br>
+{% endif %}
+{% endblock modal-content %}

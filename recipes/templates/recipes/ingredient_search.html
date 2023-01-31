@@ -1,0 +1,87 @@
+{% extends "base_generic.html" %}
+{% block title %} Search Recipe {% endblock title %}
+
+{% block navbar-content %}
+<i class="fas fa-magnifying-glass"></i>&nbsp;&nbsp; Search Ingredient
+{% endblock navbar-content %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-4 text-start"></div>
+        <div class="col-4 text-center">
+            <p class="fs-3">搜尋食材</p>
+        </div>
+        <div class="col-4"></div>
+    </div>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-2 text-start">
+                <a class="btn btn-outline-dark" title="Back"
+                    {% if recipe %}
+                        href="{% url 'edit-recipe-step2' %}"
+                    {% else %}
+                        href="{% url 'ingredient' %}"
+                    {% endif %}    
+                    >
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            </div>
+            <div class="col-8">
+                <form role="search" method="post" action="{% url 'search-ingredient' %}">
+                    {% csrf_token %}
+                    {% if recipe %}
+                        <input type="hidden" id="recipe" name="recipe" value="recipe" />
+                    {% endif %} 
+                    <div class="input-group flex-nowrap"> 
+                        <input type="text" id="search_name" name="search_name" class="form-control" placeholder="輸入食材名稱" aria-label="Search">
+                        <button class="input-group-text btn btn-outline-primary" type="submit" name="search"><i class="fas fa-magnifying-glass"></i></button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+
+    {% if obj %}
+        <hr>
+        <div class="list-group mb-3 mt-3">
+            {% if recipe %}
+                {% for ingredient, nutrition_facts in obj %}  
+                    <button class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#addIngredientToRecipeModal{{ ingredient.pk }}" title="Add Ingredient to Recipe">
+                        <div class="d-flex w-100 justify-content-between" >
+                            <h5 class="mb-1">{{ ingredient.ingredient }}</h5>
+                            <small class="text-muted">{{ nutrition_facts.calories }}kcal</small>
+                        </div>
+                        <div class="d-flex w-100 justify-content-between" >
+                            <p class="mb-1">{{ ingredient.brand }} </p>
+                            <small class="text-muted">C {{ nutrition_facts.carbohydrate }} / P {{ nutrition_facts.protein }} / F {{ nutrition_facts.total_fat }}</small>
+                        </div>
+                        <small>{{ ingredient.quantity }} {{ ingredient.unit }} </small>
+                    </button>
+                    {% include 'recipes/used_ingredient_add.html' %}
+                {% endfor %}
+            {% else %}
+                {% for ingredient, nutrition_facts in obj %}  
+                    <button class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#ingredientDetailModal{{ ingredient.pk }}" title="Ingredient detail">
+                        <div class="d-flex w-100 justify-content-between" >
+                            <h5 class="mb-1">{{ ingredient.ingredient }}{% if ingredient.alias %} ({{ ingredient.alias }}) {% endif %}</h5>
+                            <small class="text-muted">{{ nutrition_facts.calories }}kcal</small>
+                        </div>
+                        <div class="d-flex w-100 justify-content-between" >
+                            <p class="mb-1">{{ ingredient.brand }} </p>
+                            <small class="text-muted">C {{ nutrition_facts.carbohydrate }} / P {{ nutrition_facts.protein }} / F {{ nutrition_facts.total_fat }}</small>
+                        </div>
+                        <small>{{ ingredient.quantity }} {{ ingredient.unit }} </small>
+                    </button>
+                    {% include 'ingredients/ingredient_detail.html' %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endif %}
+    {% if notFound %}
+        <hr>
+    
+        <p class="fs-6 text-center">目前沒有關於 {{search_text}} 的資訊</p>
+
+    {% endif %}
+{% endblock %}

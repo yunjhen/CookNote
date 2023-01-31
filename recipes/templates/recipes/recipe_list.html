@@ -1,0 +1,49 @@
+{% extends "base_generic.html" %}
+{% block title %} Recipe {% endblock title %}
+
+{% block content %}
+    <div class="row mb-3">
+        <div class="col-6"><h3 class="">食譜：</h3></div>
+        <div class="col-6 text-end">
+            <a class="btn btn-outline-secondary btn-sm" href="{% url 'add-recipe' %}" role="button"><i class="fas fa-plus"></i>&nbsp; 新增食譜</a>
+            
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-4">
+        {% for recipe in recipes %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        {% if recipe.photo %}
+                            <image xlink:href="{{ recipe.photo.photo.url }}" src="{{ recipe.photo.photo.url }}" width="100%" height="100%" alt="{{ recipe.delicacy }}">
+                        {% else %}
+                            <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">No cover</text>
+                        {% endif %}
+                    </svg>
+                    <div class="card-body">
+                        <div class="d-flex w-100 justify-content-between" >
+                            <h5 class="mb-1">{{ recipe.delicacy }}</h5>
+                            <small class="text-muted">{{ recipe.servings }}人份
+                                {% if recipe.cooking_time %}
+                                    ({{ recipe.cooking_time }}分鐘)
+                                {% endif %}
+                            </small>
+                        </div>
+                        <p class="mb-3">{% include "recipes/recipe_select_delicacy_type.html" %} - {% include "recipes/recipe_select_category.html" %}</p>
+                        <!-- <p class="card-text">{{ recipe.introduction }}</p> -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="{% url 'recipe-detail' recipe.pk %}" class="btn btn-sm btn-outline-secondary" aria-current="true">View</a>
+                                <a href="{% url 'edit-recipe' recipe.pk %}" class="btn btn-sm btn-outline-secondary" aria-current="true">Edit</a>
+                            </div>
+                            <button data-bs-toggle="modal" data-bs-target="#deleteRecipeModal{{ recipe.pk }}" class="btn btn-secondary rounded-circle" title="Delete Recipe">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% include 'recipes/recipe_delete_modal.html' %}
+        {% endfor %}
+    </div> 
+{% endblock content %}

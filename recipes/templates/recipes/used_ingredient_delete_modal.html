@@ -1,0 +1,13 @@
+
+{% extends 'confirmation_modal.html' %}
+
+{% block modal-id %}id="deleteIngredientModal{{ item.used_ingredient.pk }}"{% endblock modal-id %}
+{% block action %} action="{% url 'recipe-delete-ingredient' item.used_ingredient.pk %}"{% endblock action %}
+
+{% block submit-btn-color %}btn-outline-danger{% endblock submit-btn-color %}
+{% block submit-btn-value %}刪除{% endblock submit-btn-value %}
+
+{% block modal-title %}刪除所選的材料?{% endblock modal-title %}
+{% block modal-content %}
+{{ item.used_ingredient.ingredient.ingredient }}{% if ingredient.alias %} ({{ ingredient.alias }}) {% endif %} - {{ item.used_ingredient.ingredient.brand }} &nbsp;&nbsp;&nbsp;{{ item.quantity_used }} {{ item.used_ingredient.ingredient.unit }}
+{% endblock modal-content %}

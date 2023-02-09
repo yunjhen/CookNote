@@ -382,10 +382,18 @@ def sort_step(steps):
     if len(steps) < 2:
         return steps
     else:
-        pivot = steps[0]
+        mid = len(steps) // 2
+        pivot = steps[mid]
+
         less = []
         greater = []
-        for i in steps[1:]: 
+        for i in steps[:mid]: 
+            if int(i.step) <= int(pivot.step):
+                less.append(i)
+            else:
+                greater.append(i)
+
+        for i in steps[mid+1:]: 
             if int(i.step) <= int(pivot.step):
                 less.append(i)
             else:
